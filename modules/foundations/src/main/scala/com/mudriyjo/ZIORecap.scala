@@ -18,7 +18,7 @@ object ZIORecap extends ZIOAppDefault {
   val otherVersion = miningOfLife.flatMap(x => ZIO.succeed(println(x)))
 
   // computation
-  val smallProgramm = for {
+  val smallProgram = for {
     _ <- Console.printLine("Hello, what is your name?")
     name <- ZIO.succeed(StdIn.readLine())
     _ <- Console.printLine(s"Hello, to ZIO $name")
@@ -112,11 +112,12 @@ object ZIORecap extends ZIOAppDefault {
     _ <- sub.subscribeUser(user)
   } yield ()
 
-  val programm = for {
+  val program = for {
     _ <- subscribe(User("Alex", "alex@gmail.com"))
     _ <- subscribe(User("John", "John@gmail.com"))
   } yield ()
-  override def run = programm.provide(
+
+  override def run = program.provide(
     SubscriptionService.live,
     EmailServices.live,
     DatabaseService.live,
