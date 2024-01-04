@@ -9,5 +9,6 @@ services:
     environment:
       - "POSTGRES_USER=docker"
       - "POSTGRES_PASSWORD=docker"
+      - "POSTGRES_DB=demodb"
     ports:
       - "5432:5432"

@@ -38,7 +38,7 @@ object TapirDemo extends ZIOAppDefault {
     .out(jsonBody[Job])
     .serverLogicSuccess(req => ZIO.succeed {
       val maxId = db.keys.max
-      val newJob = Job(maxId + 1, title=req.title, companyName = req.companyName, url = req.url)
+      val newJob = Job(maxId + 1, title = req.title, companyName = req.companyName, url = req.url)
       db.addOne(maxId + 1, newJob)
       newJob
     })
@@ -104,17 +104,4 @@ object TapirDemo extends ZIOAppDefault {
   override def run = jobProgramm.provide(
     Server.default
   )
-
-  case class JobUpdateRequest(title: String, companyName: String, url: String)
-  object JobUpdateRequest {
-    given codec: JsonCodec[JobUpdateRequest] = DeriveJsonCodec.gen[JobUpdateRequest]
-  }
-  case class JobCreationRequest(title: String, companyName: String, url: String)
-  object JobCreationRequest {
-    given codec: JsonCodec[JobCreationRequest] = DeriveJsonCodec.gen[JobCreationRequest]
-  }
-  case class Job(id: Long, title: String, companyName: String, url: String)
-  object Job {
-    given codec: JsonCodec[Job] = DeriveJsonCodec.gen[Job]
-  }
 }
