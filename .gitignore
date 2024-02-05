@@ -33,3 +33,17 @@ classes/
 
 # Visual Studio Code
 .vscode
+
+.metals/
+.ammonite/
+metals.sbt
+metals/project/
+
+.vscode/
+
+local.*
+project/boot/
+project/plugins/project/
+**/.bloop
+.bsp/
+.scala-build/
