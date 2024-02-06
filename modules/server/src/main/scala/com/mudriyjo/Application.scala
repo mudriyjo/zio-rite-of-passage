@@ -4,16 +4,17 @@ import sttp.tapir.*
 import sttp.tapir.server.ziohttp.*
 import zio.*
 import zio.http.Server
-import com.mudriyjo.reviewboard.http.controller.*
+import reviewboard.http.controller.HealthController
+import com.mudriyjo.reviewboard.http.api.HttpApi
 
 object Application extends ZIOAppDefault {
 
   val server = for {
-    healthController <- HealthController.makeZIO
+    api <- HttpApi.endpointsZIO
     _ <- Server.serve(
       ZioHttpInterpreter(
         ZioHttpServerOptions.default
-      ).toHttp(healthController.endpoint)
+      ).toHttp(HttpApi.gatheringRoutes(api))
     )
   } yield ()
 
